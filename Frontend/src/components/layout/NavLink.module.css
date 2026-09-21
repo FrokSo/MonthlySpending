@@ -1,0 +1,17 @@
+.link {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-md);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--color-text);
+}
+
+.active {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}

@@ -1,0 +1,16 @@
+.wrap {
+  width: 100%;
+}
+
+.axisRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.peak {
+  color: var(--color-text);
+  font-weight: var(--font-weight-medium);
+}

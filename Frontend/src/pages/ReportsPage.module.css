@@ -1,0 +1,53 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+}
+
+.cardTitle {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+}
+
+.chartHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.chartMeta {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.budgetLabel {
+  color: #b45309;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.insightsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}

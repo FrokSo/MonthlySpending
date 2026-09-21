@@ -1,0 +1,9 @@
+.group {
+  margin-bottom: var(--space-2);
+}
+
+.dateHeader {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  padding: var(--space-2) 0;
+}

@@ -1,0 +1,32 @@
+.label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+.sublabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.trend {
+  font-size: var(--font-size-sm);
+  color: var(--color-success);
+  margin-top: var(--space-1);
+}
+
+.emphasis {
+  background: var(--color-primary);
+  color: white;
+}
+
+.emphasis .label,
+.emphasis .sublabel {
+  color: rgba(255, 255, 255, 0.8);
+}
