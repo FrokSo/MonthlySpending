@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Thrifty.Api/Thrifty.Api.csproj" />
+    <Project Path="src/Thrifty.Application/Thrifty.Application.csproj" />
+    <Project Path="src/Thrifty.Domain/Thrifty.Domain.csproj" />
+    <Project Path="src/Thrifty.Infrastructure/Thrifty.Infrastructure.csproj" />
+  </Folder>
+</Solution>

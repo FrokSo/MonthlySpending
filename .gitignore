@@ -1,0 +1,13 @@
+.claude/settings.local.json
+
+# Editors and IDEs
+.vs/
+.idea/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env

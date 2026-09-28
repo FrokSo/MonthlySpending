@@ -1,0 +1,6 @@
+@Thrifty.Api_HostAddress = http://localhost:5236
+
+GET {{Thrifty.Api_HostAddress}}/api/transactions
+Accept: application/json
+
+###
