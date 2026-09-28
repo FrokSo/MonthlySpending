@@ -1,8 +1,9 @@
 using Thrifty.Domain.Entities;
 
-namespace Thrifty.Application.Abstractions;
-
-public interface ITransactionRepository
+namespace Thrifty.Application.Abstractions
 {
-    Task<IReadOnlyList<Transaction>> GetAllAsync(CancellationToken cancellationToken = default);
+    public interface ITransactionRepository
+    {
+        Task<IReadOnlyList<Transaction>> GetAllAsync(CancellationToken cancellationToken = default);
+    }
 }

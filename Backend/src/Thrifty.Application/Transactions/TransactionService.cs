@@ -1,12 +1,20 @@
 using Thrifty.Application.Abstractions;
 
-namespace Thrifty.Application.Transactions;
-
-public class TransactionService(ITransactionRepository transactions)
+namespace Thrifty.Application.Transactions
 {
-    public async Task<IReadOnlyList<TransactionDto>> GetAllAsync(CancellationToken cancellationToken = default)
+    public class TransactionService
     {
-        var entities = await transactions.GetAllAsync(cancellationToken);
-        return entities.Select(TransactionDto.FromEntity).ToList();
+        private readonly ITransactionRepository _transactions;
+
+        public TransactionService(ITransactionRepository transactions)
+        {
+            _transactions = transactions;
+        }
+
+        public async Task<IReadOnlyList<TransactionDto>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            var entities = await _transactions.GetAllAsync(cancellationToken);
+            return entities.Select(TransactionDto.FromEntity).ToList();
+        }
     }
 }

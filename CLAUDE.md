@@ -64,7 +64,41 @@ Conventions:
 - In Development, pending migrations are applied at startup. The SQLite file is `src/Thrifty.Api/thrifty.db` and is gitignored. To reset it, stop the API and delete `thrifty.db*`; the next run recreates it.
 - The frontend is not wired to the API yet: there is no CORS policy in `Program.cs` and no proxy in `vite.config.ts`. One of them is needed before the first fetch from the Vite dev server.
 
-## Styling
+## C# code style
+
+The owner prefers the explicit, long-form C# style over modern shorthand, because it is easier to read. Follow it in all new and edited backend code:
+
+- **Namespaces:** block-scoped `namespace X { ... }`, not file-scoped `namespace X;`.
+- **Classes:** ordinary `class` with properties declared one per line. No `record` or `record struct`, including for DTOs. Use get-only properties (`{ get; }`) set in the constructor when a type should be immutable.
+- **Constructors:** no primary constructors (`class Foo(IBar bar)`). Store injected dependencies in `private readonly` fields prefixed with `_`, assigned in a written-out constructor. Pass base arguments with `: base(...)`.
+- **Method and property bodies:** full `{ ... return ...; }` bodies, not expression-bodied `=>` members.
+- **Object and collection creation:** name the type (`new Transaction { ... }`, `new Transaction[] { ... }`), not target-typed `new()` or collection expressions `[ ... ]`.
+- **`using`:** block form `using (var x = ...) { ... }`, not `using var x = ...;`.
+
+These are fine and should stay: lambdas (LINQ, EF configuration, DI registration), `var`, `async`/`await`, nullable annotations (`string?`) and `required`. EF-generated migration files keep their generated style.
+
+```csharp
+namespace Thrifty.Application.Transactions
+{
+    public class TransactionService
+    {
+        private readonly ITransactionRepository _transactions;
+
+        public TransactionService(ITransactionRepository transactions)
+        {
+            _transactions = transactions;
+        }
+
+        public async Task<IReadOnlyList<TransactionDto>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            var entities = await _transactions.GetAllAsync(cancellationToken);
+            return entities.Select(TransactionDto.FromEntity).ToList();
+        }
+    }
+}
+```
+
+## Frontend styling
 
 - Every component has its own co-located `*.module.css` (CSS Modules). No CSS framework is used.
 - Design tokens (colors, `--space-1`…`--space-6`, `--radius-*`) are defined in `src/styles/tokens.css`, which is imported globally in `main.tsx`. Use the tokens instead of hard-coded values.

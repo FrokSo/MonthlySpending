@@ -1,13 +1,14 @@
 using Microsoft.Extensions.DependencyInjection;
 using Thrifty.Application.Transactions;
 
-namespace Thrifty.Application;
-
-public static class DependencyInjection
+namespace Thrifty.Application
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    public static class DependencyInjection
     {
-        services.AddScoped<TransactionService>();
-        return services;
+        public static IServiceCollection AddApplication(this IServiceCollection services)
+        {
+            services.AddScoped<TransactionService>();
+            return services;
+        }
     }
 }

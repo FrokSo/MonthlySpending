@@ -5,30 +5,33 @@ using Thrifty.Application.Abstractions;
 using Thrifty.Infrastructure.Persistence;
 using Thrifty.Infrastructure.Repositories;
 
-namespace Thrifty.Infrastructure;
-
-public static class DependencyInjection
+namespace Thrifty.Infrastructure
 {
-    // contentRootPath anchors a relative SQLite path (e.g. "thrifty.db") to the API project folder,
-    // so `dotnet run`, Visual Studio and `dotnet ef` all use the same database file.
-    public static IServiceCollection AddInfrastructure(
-        this IServiceCollection services, string connectionString, string contentRootPath)
+    public static class DependencyInjection
     {
-        var sqlite = new SqliteConnectionStringBuilder(connectionString);
-        if (!Path.IsPathRooted(sqlite.DataSource))
+        // contentRootPath anchors a relative SQLite path (e.g. "thrifty.db") to the API project folder,
+        // so `dotnet run`, Visual Studio and `dotnet ef` all use the same database file.
+        public static IServiceCollection AddInfrastructure(
+            this IServiceCollection services, string connectionString, string contentRootPath)
         {
-            sqlite.DataSource = Path.Combine(contentRootPath, sqlite.DataSource);
+            var sqlite = new SqliteConnectionStringBuilder(connectionString);
+            if (!Path.IsPathRooted(sqlite.DataSource))
+            {
+                sqlite.DataSource = Path.Combine(contentRootPath, sqlite.DataSource);
+            }
+
+            services.AddDbContext<AppDbContext>(options => options.UseSqlite(sqlite.ToString()));
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
+            return services;
         }
 
-        services.AddDbContext<AppDbContext>(options => options.UseSqlite(sqlite.ToString()));
-        services.AddScoped<ITransactionRepository, TransactionRepository>();
-        return services;
-    }
-
-    // Creates the database and applies any pending migrations.
-    public static void MigrateDatabase(this IServiceProvider services)
-    {
-        using var scope = services.CreateScope();
-        scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.Migrate();
+        // Creates the database and applies any pending migrations.
+        public static void MigrateDatabase(this IServiceProvider services)
+        {
+            using (var scope = services.CreateScope())
+            {
+                scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.Migrate();
+            }
+        }
     }
 }
