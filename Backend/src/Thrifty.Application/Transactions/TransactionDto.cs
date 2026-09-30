@@ -38,16 +38,16 @@ namespace Thrifty.Application.Transactions
             Amount = amount;
         }
 
-        public static TransactionDto FromEntity(Transaction t)
+        public static TransactionDto FromEntity(Transaction transaction)
         {
             return new TransactionDto(
-                t.Id.ToString(),
-                t.Date,
-                t.Merchant,
-                t.Note,
-                t.Category,
-                t.PaymentMethod,
-                t.Amount);
+                transaction.Id.ToString(),
+                transaction.Date,
+                transaction.Merchant,
+                transaction.Note,
+                transaction.Category,
+                transaction.PaymentMethod,
+                transaction.Amount);
         }
     }
 }

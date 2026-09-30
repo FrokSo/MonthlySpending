@@ -22,6 +22,7 @@ namespace Thrifty.Infrastructure
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlite(sqlite.ToString()));
             services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<IBudgetRepository, BudgetRepository>();
             return services;
         }
 

@@ -22,5 +22,22 @@ namespace Thrifty.Infrastructure.Repositories
                 .ThenByDescending(t => t.Id)
                 .ToListAsync(cancellationToken);
         }
+
+        /// <summary>
+        /// Retrieves all transactions based on a month 
+        /// </summary>
+        /// <param name="monthYear">the date in months & year, e.g. 2026-09</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<IReadOnlyList<Transaction>> GetTransactionsByMonthAsync(string monthYear, CancellationToken cancellationToken = default)
+        {
+            return await _db.Transactions
+                .AsNoTracking()
+                .Where(t => t.Date.ToString().StartsWith(monthYear))
+                .OrderByDescending(t => t.Date)
+                .ToListAsync(cancellationToken);
+        }
+
+
     }
 }

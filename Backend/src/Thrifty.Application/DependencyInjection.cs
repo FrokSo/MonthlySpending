@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using Thrifty.Application.Budget;
-using Thrifty.Application.Category;
+using Thrifty.Application.Budgets;
+using Thrifty.Application.DailySpend;
+using Thrifty.Application.MonthlySpend;
 using Thrifty.Application.Transactions;
 
 namespace Thrifty.Application
@@ -11,7 +12,8 @@ namespace Thrifty.Application
         {
             services.AddScoped<TransactionService>();
             services.AddScoped<BudgetServices>();
-            services.AddScoped<CategoryServices>();
+            services.AddScoped<DailySpendServices>();
+            services.AddScoped<MonthlySpendServices>();
 
             return services;
         }

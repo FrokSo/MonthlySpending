@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Text;
 using Thrifty.Application.Abstractions;
 
-namespace Thrifty.Application.DailySpend
+namespace Thrifty.Application.Budgets
 {
-    internal class DailySpendServices
+    internal class BudgetServices
     {
         private readonly ITransactionRepository _transactions;
 
-        public DailySpendServices(ITransactionRepository transactions)
+        public BudgetServices(ITransactionRepository transactions)
         {
             _transactions = transactions;
         }
 
-        public List<DailySpendDto> GetDailySpend(string monthYear)
+        public List<BudgetDto> GetBudgetCategory(string monthYear)
         {
-            return new List<DailySpendDto>();
+            return new List<BudgetDto>();
         }
     }
 }
