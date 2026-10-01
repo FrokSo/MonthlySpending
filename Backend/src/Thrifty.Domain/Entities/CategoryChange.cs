@@ -5,7 +5,7 @@ using Thrifty.Domain.Enums;
 
 namespace Thrifty.Domain.Entities
 {
-    internal class CategoryChange
+    public class CategoryChange
     {
         public CategoryId Category { get; set; }
         public int PercentChange { get; set;}

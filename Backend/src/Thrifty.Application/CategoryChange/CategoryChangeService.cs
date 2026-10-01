@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Text;
 using Thrifty.Application.Abstractions;
 
-namespace Thrifty.Application.Budgets
+namespace Thrifty.Application.CategoryChange
 {
-    public class BudgetServices
+    public class CategoryChangeService
     {
         private readonly ITransactionRepository _transactions;
         private readonly IBudgetRepository _budgets;
 
-        public BudgetServices(ITransactionRepository transactions, IBudgetRepository budgets)
+        public CategoryChangeService(ITransactionRepository transactions, IBudgetRepository budgets)
         {
             _transactions = transactions;
             _budgets = budgets;
         }
 
-        public List<BudgetDto> GetBudgetCategory(int year, int month)
+        public List<CategoryChangeDto> GetCategoryChanges (int year, int month)
         {
-            return new List<BudgetDto>();
+            return new List<CategoryChangeDto>();
         }
     }
 }

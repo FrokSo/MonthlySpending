@@ -16,5 +16,11 @@ namespace Thrifty.Application.Transactions
             var entities = await _transactions.GetAllAsync(cancellationToken);
             return entities.Select(TransactionDto.FromEntity).ToList();
         }
+
+        public async Task<IReadOnlyList<TransactionDto>> GetTransactionByMonthAsync(int year, int month, CancellationToken cancellationToken = default)
+        {
+            var transactions = await _transactions.GetTransactionsByMonthAsync(year, month, cancellationToken);
+            return transactions.Select(TransactionDto.FromEntity).ToList();
+        }
     }
 }

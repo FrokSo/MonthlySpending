@@ -5,7 +5,7 @@ using Thrifty.Application.Abstractions;
 
 namespace Thrifty.Application.MonthlySpend
 {
-    internal class MonthlySpendServices
+    public class MonthlySpendServices
     {
         private readonly ITransactionRepository _transactions;
 
@@ -14,7 +14,12 @@ namespace Thrifty.Application.MonthlySpend
             _transactions = transactions;
         }
 
-        public List<MonthlySpendDto> GetMonthlySpend(string monthYear)
+        public List<MonthlySpendDto> GetMonthlySpend(int year, int month)
+        {
+            return new List<MonthlySpendDto>();
+        }
+
+        public IReadOnlyList<MonthlySpendDto> GetRangeMonthlySpend(int startYear, int startMonth, int endYear, int endMonth)
         {
             return new List<MonthlySpendDto>();
         }

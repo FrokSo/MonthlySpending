@@ -14,6 +14,16 @@ namespace Thrifty.Infrastructure.Repositories
             _db = db;
         }
 
+        public Task<Transaction> CreateTransactionAsync(Transaction transaction)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Transaction> DeleteTransactionAsync(Transaction transaction)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IReadOnlyList<Transaction>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return await _db.Transactions
@@ -29,8 +39,9 @@ namespace Thrifty.Infrastructure.Repositories
         /// <param name="monthYear">the date in months & year, e.g. 2026-09</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<IReadOnlyList<Transaction>> GetTransactionsByMonthAsync(string monthYear, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<Transaction>> GetTransactionsByMonthAsync(int year, int month, CancellationToken cancellationToken = default)
         {
+            string monthYear = year.ToString() + "-" + month.ToString("D2");
             return await _db.Transactions
                 .AsNoTracking()
                 .Where(t => t.Date.ToString().StartsWith(monthYear))
@@ -38,6 +49,14 @@ namespace Thrifty.Infrastructure.Repositories
                 .ToListAsync(cancellationToken);
         }
 
+        public Task<IReadOnlyList<Transaction>> GetTransactionsRangeMonthAsync(int startYear, int startMonth, int endYear, int endMonth, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task<Transaction> UpdateTransactionAsync(Transaction transaction)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

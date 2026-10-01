@@ -5,7 +5,7 @@ using Thrifty.Application.Abstractions;
 
 namespace Thrifty.Application.DailySpend
 {
-    internal class DailySpendServices
+    public class DailySpendServices
     {
         private readonly ITransactionRepository _transactions;
 
@@ -14,7 +14,7 @@ namespace Thrifty.Application.DailySpend
             _transactions = transactions;
         }
 
-        public List<DailySpendDto> GetDailySpend(string monthYear)
+        public List<DailySpendDto> GetDailySpend(int year, int month)
         {
             return new List<DailySpendDto>();
         }
