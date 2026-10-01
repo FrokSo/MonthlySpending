@@ -1,4 +1,4 @@
-import { categories } from '../../data/mockData';
+import { categories } from '../../data/categories';
 import type { CategoryChange } from '../../types';
 import styles from './ChangeList.module.css';
 

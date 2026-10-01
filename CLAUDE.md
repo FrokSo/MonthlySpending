@@ -44,8 +44,8 @@ In Development, the API serves its OpenAPI spec at `/openapi/v1.json` (JSON only
   - `components/data/`: domain components that take typed finance data (Transaction, BudgetCategory, …). The charts here wrap Recharts.
   - `components/layout/`: the app shell and navigation.
 - **Data model:** all domain types live in `src/types/index.ts`. `Transaction.amount` is signed: negative means expense, positive means income. Filter on the sign rather than on category when separating the two.
-- **Mock data:** `src/data/mockData.ts` exports `categories`, `transactions`, `budgets`, `dailySpend`, `monthlySpend`, `categoryChanges` and `summary`. Pages import from it directly. When a backend is added, this is the seam to replace.
-- **Categories and colors:** `CategoryId` is a fixed union. Each entry in `categories` has a `colorVar` that names a CSS custom property (e.g. `'--color-food'`). Components apply it as `` `var(${cat.colorVar})` ``, including as Recharts `fill`. Adding a category means updating the `CategoryId` union, the `categories` map, a matching `--color-*` token in `tokens.css`, and the backend `CategoryId` enum in `Thrifty.Domain/Enums/`. `BudgetStatus` is mirrored the same way.
+- **Mock data:** `src/data/mockData.ts` exports `transactions`, `budgets`, `dailySpend`, `monthlySpend`, `categoryChanges` and `summary`. Pages import from it directly. When a backend is added, this is the seam to replace.
+- **Categories and colors:** `CategoryId` is a fixed union. `src/data/categories.ts` holds the `categories` map; it is static config, not mock data, and stays when the mocks are removed. Each entry has a `colorVar` that names a CSS custom property (e.g. `'--color-food'`). Components apply it as `` `var(${cat.colorVar})` ``, including as Recharts `fill`. Adding a category means updating the `CategoryId` union, the `categories` map, a matching `--color-*` token in `tokens.css`, and the backend `CategoryId` enum in `Thrifty.Domain/Enums/`. `BudgetStatus` is mirrored the same way.
 
 ## Backend architecture
 

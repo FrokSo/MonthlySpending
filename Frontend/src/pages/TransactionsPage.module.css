@@ -33,6 +33,14 @@
   justify-content: space-between;
 }
 
+.status {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+  padding: var(--space-4);
+  text-align: center;
+}
+
 .count {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);

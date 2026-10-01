@@ -1,5 +1,5 @@
 import { PieChart, Pie, Cell } from 'recharts';
-import { categories } from '../../data/mockData';
+import { categories } from '../../data/categories';
 import type { CategoryId } from '../../types';
 import styles from './DonutChart.module.css';
 

@@ -1,6 +1,6 @@
 import IconIndicator from '../ui/IconIndicator';
 import Badge from '../ui/Badge';
-import { categories } from '../../data/mockData';
+import { categories } from '../../data/categories';
 import type { Transaction } from '../../types';
 import styles from './TransactionRow.module.css';
 

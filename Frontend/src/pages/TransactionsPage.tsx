@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import SearchInput from '../components/ui/SearchInput';
@@ -6,7 +6,10 @@ import FilterPillGroup from '../components/ui/FilterPillGroup';
 import Dropdown from '../components/ui/Dropdown';
 import TransactionList from '../components/data/TransactionList';
 import Pagination from '../components/ui/Pagination';
-import { categories, transactions, summary } from '../data/mockData';
+import { categories } from '../data/categories';
+import { summary } from '../data/mockData';
+import { fetchTransactions } from '../api/transactions';
+import type { Transaction } from '../types';
 import styles from './TransactionsPage.module.css';
 
 const PAGE_SIZE = 6;
@@ -15,6 +18,27 @@ export default function TransactionsPage() {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('All');
   const [page, setPage] = useState(1);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Aborting on unmount also covers StrictMode's double-run of effects in development.
+    const controller = new AbortController();
+    fetchTransactions(controller.signal)
+      .then(setTransactions)
+      .catch((err: unknown) => {
+        if (!controller.signal.aborted) {
+          setError(err instanceof Error ? err.message : String(err));
+        }
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
+      });
+    return () => controller.abort();
+  }, []);
 
   const filterOptions = ['All', ...Object.values(categories).filter((c) => c.id !== 'income').map((c) => c.label)];
 
@@ -25,7 +49,7 @@ export default function TransactionsPage() {
         filter === 'All' || categories[t.category].label === filter;
       return matchesSearch && matchesFilter;
     });
-  }, [search, filter]);
+  }, [transactions, search, filter]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const pageItems = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
@@ -50,7 +74,13 @@ export default function TransactionsPage() {
       <FilterPillGroup options={filterOptions} value={filter} onChange={setFilter} />
 
       <Card>
-        <TransactionList transactions={pageItems} showCategoryBadge groupByDate />
+        {loading ? (
+          <p className={styles.status}>Loading transactions…</p>
+        ) : error ? (
+          <p className={styles.status}>Couldn't load transactions: {error}</p>
+        ) : (
+          <TransactionList transactions={pageItems} showCategoryBadge groupByDate />
+        )}
       </Card>
 
       <div className={styles.footer}>
