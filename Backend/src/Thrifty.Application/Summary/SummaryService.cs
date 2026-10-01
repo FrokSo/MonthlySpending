@@ -1,3 +1,4 @@
+using System.Globalization;
 using Thrifty.Application.Abstractions;
 using Thrifty.Domain.Entities;
 
@@ -14,14 +15,16 @@ namespace Thrifty.Application.Summary
             _budgets = budgets;
         }
 
-        public async Task<SummaryDto> GetSummaryAsync(int year, int month, CancellationToken cancellationToken = default)
+        // date is the month to summarise, formatted "yyyy-MM" (e.g. "2026-09").
+        public async Task<SummaryDto> GetSummaryAsync(string date, CancellationToken cancellationToken = default)
         {
-            var previousMonth = new DateOnly(year, month, 1).AddMonths(-1);
+            var selectedMonth = DateOnly.ParseExact(date, "yyyy-MM", CultureInfo.InvariantCulture);
+            var previousMonth = selectedMonth.AddMonths(-1);
 
             // Awaited one at a time because a DbContext does not support parallel queries.
-            var transactions = await _transactions.GetTransactionsByMonthAsync(year, month, cancellationToken);
-            var previousTransactions = await _transactions.GetTransactionsByMonthAsync(previousMonth.Year, previousMonth.Month, cancellationToken);
-            var budgets = await _budgets.GetByMonthAsync(year, month, cancellationToken);
+            var transactions = await _transactions.GetTransactionsByMonthAsync(date, cancellationToken);
+            var previousTransactions = await _transactions.GetTransactionsByMonthAsync(previousMonth.ToString("yyyy-MM", CultureInfo.InvariantCulture), cancellationToken);
+            var budgets = await _budgets.GetByMonthAsync(selectedMonth.Year, selectedMonth.Month, cancellationToken);
 
             var income = transactions.Where(t => t.Amount > 0).Sum(t => t.Amount);
             var spent = GetTotalSpent(transactions);
@@ -47,8 +50,7 @@ namespace Thrifty.Application.Summary
             }
 
             return new SummaryDto(
-                year,
-                month,
+                selectedMonth.ToString("yyyy-MM", CultureInfo.InvariantCulture),
                 income,
                 spent,
                 budgets.Sum(b => b.Limit),

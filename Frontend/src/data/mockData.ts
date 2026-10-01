@@ -54,7 +54,7 @@ export const summary = {
   budget: 3000,
   vsLastMonthPercent: -6,
   daysLeftInMonth: 11,
-  currentMonth: 'September 2026',
+  month: '2026-09',
   savedThisMonth: 3016,
   savedPercentOfIncome: 58,
   topMerchant: 'NTUC FairPrice',

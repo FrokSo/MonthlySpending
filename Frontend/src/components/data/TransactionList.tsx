@@ -1,5 +1,6 @@
 import TransactionRow from './TransactionRow';
 import type { Transaction } from '../../types';
+import { toIsoDate } from '../../utils/date';
 import styles from './TransactionList.module.css';
 
 interface TransactionListProps {
@@ -9,11 +10,9 @@ interface TransactionListProps {
 }
 
 function formatDateLabel(date: string): string {
-  const d = new Date(date);
-  const today = new Date('2026-09-18');
-  const isToday = d.toDateString() === today.toDateString();
-  if (isToday) return 'Today, ' + d.toLocaleDateString('en-SG', { day: 'numeric', month: 'short' });
-  return d.toLocaleDateString('en-SG', { day: 'numeric', month: 'short' });
+  // Appending a time makes the Date parse as local midnight; a bare "YYYY-MM-DD" parses as UTC.
+  const label = new Date(`${date}T00:00:00`).toLocaleDateString('en-SG', { day: 'numeric', month: 'short' });
+  return date === toIsoDate(new Date()) ? 'Today, ' + label : label;
 }
 
 export default function TransactionList({

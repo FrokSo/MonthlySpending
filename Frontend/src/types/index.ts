@@ -47,3 +47,17 @@ export interface CategoryChange {
   category: CategoryId;
   percentChange: number;
 }
+
+// Mirrors SummaryDto in the backend.
+export interface Summary {
+  month: string; // "yyyy-MM", e.g. "2026-09"
+  income: number;
+  spent: number; // total expenses, positive
+  budget: number;
+  vsLastMonthPercent: number;
+  savedThisMonth: number;
+  savedPercentOfIncome: number;
+  topMerchant: string | null;
+  topMerchantAmount: number;
+  topMerchantVisits: number;
+}

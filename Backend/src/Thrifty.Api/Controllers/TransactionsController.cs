@@ -14,10 +14,18 @@ namespace Thrifty.Api.Controllers
             _transactions = transactions;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<ActionResult<IReadOnlyList<TransactionDto>>> GetAll(CancellationToken cancellationToken)
         {
             var result = await _transactions.GetAllAsync(cancellationToken);
+            return Ok(result);
+        }
+
+        [HttpGet("range")]
+        public async Task<ActionResult<IReadOnlyList<TransactionDto>>> GetRange(string startDate, string endDate, CancellationToken cancellationToken)
+        {
+            
+            var result = await _transactions.GetTransactionsRangeMonthAsync(startDate, endDate, cancellationToken);
             return Ok(result);
         }
     }

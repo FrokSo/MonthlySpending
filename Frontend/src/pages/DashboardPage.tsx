@@ -7,6 +7,7 @@ import BarChart from '../components/data/BarChart';
 import BudgetCategoryCard from '../components/data/BudgetCategoryCard';
 import TransactionList from '../components/data/TransactionList';
 import { budgets, dailySpend, summary, transactions } from '../data/mockData';
+import { formatMonthLabel } from '../utils/date';
 import styles from './DashboardPage.module.css';
 
 export default function DashboardPage() {
@@ -22,7 +23,7 @@ export default function DashboardPage() {
     <div className={styles.page}>
       <div className={styles.header}>
         <div>
-          <h1 className={styles.title}>{summary.currentMonth}</h1>
+          <h1 className={styles.title}>{formatMonthLabel(summary.month)}</h1>
           <p className={styles.subtitle}>{summary.daysLeftInMonth} days left in the month</p>
         </div>
         <Dropdown

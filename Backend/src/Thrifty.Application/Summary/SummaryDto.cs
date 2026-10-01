@@ -4,9 +4,8 @@ namespace Thrifty.Application.Summary
     // Computed from transactions and budgets, so there is no entity to map from.
     public class SummaryDto
     {
-        public int Year { get; }
-
-        public int Month { get; }
+        // The month this summary covers, formatted "yyyy-MM" (e.g. "2026-09").
+        public string Month { get; }
 
         public decimal Income { get; }
 
@@ -32,8 +31,7 @@ namespace Thrifty.Application.Summary
         public int TopMerchantVisits { get; }
 
         public SummaryDto(
-            int year,
-            int month,
+            string month,
             decimal income,
             decimal spent,
             decimal budget,
@@ -44,7 +42,6 @@ namespace Thrifty.Application.Summary
             decimal topMerchantAmount,
             int topMerchantVisits)
         {
-            Year = year;
             Month = month;
             Income = income;
             Spent = spent;

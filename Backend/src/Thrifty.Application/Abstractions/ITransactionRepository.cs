@@ -8,8 +8,8 @@ namespace Thrifty.Application.Abstractions
         Task<Transaction> DeleteTransactionAsync(Transaction transaction);
         Task<Transaction> UpdateTransactionAsync(Transaction transaction);
         Task<IReadOnlyList<Transaction>> GetAllAsync(CancellationToken cancellationToken = default);
-        Task<IReadOnlyList<Transaction>> GetTransactionsByMonthAsync(int year, int month, CancellationToken cancellationToken = default);
-        Task<IReadOnlyList<Transaction>> GetTransactionsRangeMonthAsync(int startYear, int startMonth, int endYear, int endMonth, CancellationToken cancellationToken = default);
+        Task<IReadOnlyList<Transaction>> GetTransactionsByMonthAsync(string date, CancellationToken cancellationToken = default);
+        Task<IReadOnlyList<Transaction>> GetTransactionsRangeMonthAsync(string startDate, string endDate, CancellationToken cancellationToken = default);
 
     }
 }
