@@ -2,7 +2,7 @@ import Card from '../ui/Card';
 import Badge from '../ui/Badge';
 import ProgressBar from '../ui/ProgressBar';
 import IconIndicator from '../ui/IconIndicator';
-import { categories } from '../../data/categories';
+import { categories } from '../../data/Categories';
 import type { BudgetCategory } from '../../types';
 import styles from './BudgetCategoryCard.module.css';
 

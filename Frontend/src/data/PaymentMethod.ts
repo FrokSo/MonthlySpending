@@ -1,0 +1,1 @@
+export const paymentMethods = ['Credit card', 'PayNow', 'GIRO', 'Bank transfer', 'Cash'];

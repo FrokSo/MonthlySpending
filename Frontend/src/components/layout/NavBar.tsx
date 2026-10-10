@@ -4,9 +4,11 @@ import Button from '../ui/Button';
 import Avatar from '../ui/Avatar';
 import Modal from '../ui/Modal';
 import styles from './NavBar.module.css';
+import AddTransactionForm from '../data/AddTransactionForm';
 
 export default function NavBar() {
   const [isAddOpen, setIsAddOpen] = useState(false);
+
 
   return (
     <header className={styles.nav}>
@@ -30,7 +32,8 @@ export default function NavBar() {
       </div>
       {isAddOpen && (
         <Modal title="Add expense" onClose={() => setIsAddOpen(false)}>
-          <p>Form goes here.</p>
+          <AddTransactionForm onSave={() => setIsAddOpen(false)} 
+                              onCancel={() => setIsAddOpen(false)}/>
         </Modal>
       )}
     </header>

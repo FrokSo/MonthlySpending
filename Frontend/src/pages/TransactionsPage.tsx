@@ -6,7 +6,7 @@ import FilterPillGroup from '../components/ui/FilterPillGroup';
 import DateRangePicker from '../components/ui/DateRangePicker';
 import TransactionList from '../components/data/TransactionList';
 import Pagination from '../components/ui/Pagination';
-import { categories } from '../data/categories';
+import { categories } from '../data/Categories';
 import { fetchTransactionsByRange, deleteTransaction } from '../api/transactions';
 import type { Transaction } from '../types';
 import { formatRangeLabel, getPresetRange, type DateRange } from '../utils/date';
