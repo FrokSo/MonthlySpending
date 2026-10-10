@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Thrifty.Application.Abstractions;
 using Thrifty.Domain.Entities;
 using Thrifty.Infrastructure.Persistence;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Thrifty.Infrastructure.Repositories
 {
@@ -45,9 +46,16 @@ namespace Thrifty.Infrastructure.Repositories
                 .ToListAsync(cancellationToken);
         }
 
-        public Task<IReadOnlyList<Transaction>> GetTransactionsRangeMonthAsync(string startDate, string endDate, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<Transaction>> GetTransactionsRangeMonthAsync(string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            DateOnly start = DateOnly.Parse(startDate);
+            DateOnly end = DateOnly.Parse(endDate);
+            return await _db.Transactions
+                .AsNoTracking()
+                .Where(t => t.Date >= start && t.Date < end)
+                .OrderByDescending(t => t.Date)
+                .ToListAsync(cancellationToken);
+
         }
 
         public Task<Transaction> UpdateTransactionAsync(Transaction transaction)

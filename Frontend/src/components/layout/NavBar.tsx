@@ -1,9 +1,13 @@
+import { useState } from 'react';
 import NavLink from './NavLink';
 import Button from '../ui/Button';
 import Avatar from '../ui/Avatar';
+import Modal from '../ui/Modal';
 import styles from './NavBar.module.css';
 
 export default function NavBar() {
+  const [isAddOpen, setIsAddOpen] = useState(false);
+
   return (
     <header className={styles.nav}>
       <div className={styles.left}>
@@ -19,9 +23,16 @@ export default function NavBar() {
         </nav>
       </div>
       <div className={styles.right}>
-        <Button variant="primary">+ Add expense</Button>
+        <Button variant="primary" onClick={() => setIsAddOpen(true)}>
+          + Add expense
+        </Button>
         <Avatar initial="R" />
       </div>
+      {isAddOpen && (
+        <Modal title="Add expense" onClose={() => setIsAddOpen(false)}>
+          <p>Form goes here.</p>
+        </Modal>
+      )}
     </header>
   );
 }

@@ -26,6 +26,8 @@ export interface Transaction {
   amount: number; // negative = expense, positive = income
 }
 
+export type NewTransaction = Omit<Transaction, 'id'>
+
 export interface BudgetCategory {
   category: CategoryId;
   spent: number;

@@ -3,13 +3,15 @@ import Badge from '../ui/Badge';
 import { categories } from '../../data/categories';
 import type { Transaction } from '../../types';
 import styles from './TransactionRow.module.css';
+import Button from '../ui/Button';
 
 interface TransactionRowProps {
   transaction: Transaction;
   showCategoryBadge?: boolean;
+  onDelete?: (id: string) => void;
 }
 
-export default function TransactionRow({ transaction, showCategoryBadge = false }: TransactionRowProps) {
+export default function TransactionRow({ transaction, showCategoryBadge = false, onDelete}: TransactionRowProps) {
   const cat = categories[transaction.category];
   const isIncome = transaction.amount > 0;
 
@@ -32,6 +34,9 @@ export default function TransactionRow({ transaction, showCategoryBadge = false 
       <span className={isIncome ? styles.amountPositive : styles.amountNegative}>
         {isIncome ? '+' : '-'}S${Math.abs(transaction.amount).toFixed(2)}
       </span>
+      {onDelete && (
+        <Button variant = "secondary" onClick={() => onDelete(transaction.id)}>Delete</Button>
+      )}
     </div>
   );
 }

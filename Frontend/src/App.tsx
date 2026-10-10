@@ -4,10 +4,12 @@ import DashboardPage from './pages/DashboardPage';
 import TransactionsPage from './pages/TransactionsPage';
 import BudgetsPage from './pages/BudgetsPage';
 import ReportsPage from './pages/ReportsPage';
+import { TransactionsProvider } from './context/TransactionsContext';
 
 export default function App() {
   return (
     <BrowserRouter>
+    <TransactionsProvider>
       <AppShell>
         <Routes>
           <Route path="/" element={<DashboardPage />} />
@@ -16,6 +18,7 @@ export default function App() {
           <Route path="/reports" element={<ReportsPage />} />
         </Routes>
       </AppShell>
+    </TransactionsProvider>
     </BrowserRouter>
   );
 }

@@ -7,6 +7,7 @@ interface TransactionListProps {
   transactions: Transaction[];
   showCategoryBadge?: boolean;
   groupByDate?: boolean;
+  onDelete?: (id: string) => void;
 }
 
 function formatDateLabel(date: string): string {
@@ -19,12 +20,13 @@ export default function TransactionList({
   transactions,
   showCategoryBadge = false,
   groupByDate = false,
+  onDelete,
 }: TransactionListProps) {
   if (!groupByDate) {
     return (
       <div>
         {transactions.map((t) => (
-          <TransactionRow key={t.id} transaction={t} showCategoryBadge={showCategoryBadge} />
+          <TransactionRow key={t.id} transaction={t} showCategoryBadge={showCategoryBadge} onDelete={onDelete}/>
         ))}
       </div>
     );
@@ -43,7 +45,7 @@ export default function TransactionList({
         <div key={date} className={styles.group}>
           <div className={styles.dateHeader}>{formatDateLabel(date)}</div>
           {items.map((t) => (
-            <TransactionRow key={t.id} transaction={t} showCategoryBadge={showCategoryBadge} />
+            <TransactionRow key={t.id} transaction={t} showCategoryBadge={showCategoryBadge} onDelete={onDelete}/>
           ))}
         </div>
       ))}

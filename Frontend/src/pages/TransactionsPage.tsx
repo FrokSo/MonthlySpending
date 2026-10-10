@@ -7,10 +7,11 @@ import DateRangePicker from '../components/ui/DateRangePicker';
 import TransactionList from '../components/data/TransactionList';
 import Pagination from '../components/ui/Pagination';
 import { categories } from '../data/categories';
-import { fetchTransactionsByRange } from '../api/transactions';
+import { fetchTransactionsByRange, deleteTransaction } from '../api/transactions';
 import type { Transaction } from '../types';
 import { formatRangeLabel, getPresetRange, type DateRange } from '../utils/date';
 import styles from './TransactionsPage.module.css';
+import { useTransactionsChanged } from '../context/TransactionsContext';
 
 const PAGE_SIZE = 20;
 
@@ -22,6 +23,7 @@ export default function TransactionsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [range, setRange] = useState<DateRange>(() => getPresetRange('this-month'));
+  const { version } = useTransactionsChanged();
 
   useEffect(() => {
     // Aborting on cleanup cancels the previous range's request when the range changes,
@@ -40,7 +42,19 @@ export default function TransactionsPage() {
         }
       });
     return () => controller.abort();
-  }, [range]);
+  }, [range, version]);
+
+  async function handleDelete(id:string) {
+    if (!window.confirm('Delete this transaction?')) {
+      return;
+    }
+    try {
+      await deleteTransaction(id);
+      setTransactions((prev) => prev.filter((t) => t.id !== id));
+    } catch (err: unknown) {
+      window.alert(`Couldn't delete transaction: ${err instanceof Error ? err.message : String(err)}`);
+    }
+  }
 
   // Total expenses in the range as a positive number; income is excluded.
   const spent = useMemo(() => {
@@ -103,7 +117,7 @@ export default function TransactionsPage() {
         ) : filtered.length === 0 ?(
           <p className={styles.status}>No transactions found...</p>
         ) : (
-          <TransactionList transactions={pageItems} showCategoryBadge groupByDate />
+          <TransactionList transactions={pageItems} showCategoryBadge groupByDate onDelete={handleDelete}/>
         )}
       </Card>
 
