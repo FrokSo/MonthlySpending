@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Thrifty.Application.Abstractions;
+using Thrifty.Application.Transactions;
 using Thrifty.Domain.Entities;
 using Thrifty.Infrastructure.Persistence;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -15,12 +16,21 @@ namespace Thrifty.Infrastructure.Repositories
             _db = db;
         }
 
-        public Task<Transaction> CreateTransactionAsync(Transaction transaction)
+        public async Task<Transaction> CreateTransactionAsync(Transaction transaction, CancellationToken cancellation = default)
         {
-            throw new NotImplementedException();
+            _db.Transactions.Add(transaction);
+            await _db.SaveChangesAsync(cancellation);
+            return transaction;
         }
 
-        public Task<Transaction> DeleteTransactionAsync(Transaction transaction)
+        public async Task<bool> DeleteTransactionAsync(int id, CancellationToken cancellation = default)
+        {
+            int count = await _db.Transactions.Where(t=> t.Id == id)
+                            .ExecuteDeleteAsync(cancellation);
+            return count > 0;
+        }
+
+        public async Task<Transaction> UpdateTransactionAsync(Transaction transaction, CancellationToken cancellation)
         {
             throw new NotImplementedException();
         }

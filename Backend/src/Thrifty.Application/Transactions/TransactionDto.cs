@@ -4,6 +4,9 @@ using Thrifty.Domain.Enums;
 namespace Thrifty.Application.Transactions
 {
     // Shape matches the Transaction interface in Frontend/src/types/index.ts.
+    /// <summary>
+    /// Used to send Transaction over to frontend
+    /// </summary>
     public class TransactionDto
     {
         public string Id { get; }

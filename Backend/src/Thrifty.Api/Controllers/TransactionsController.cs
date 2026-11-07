@@ -28,5 +28,20 @@ namespace Thrifty.Api.Controllers
             var result = await _transactions.GetTransactionsRangeMonthAsync(startDate, endDate, cancellationToken);
             return Ok(result);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateTransaction (CreateTransactionRequest createTransactionRequest, CancellationToken cancellationToken)
+        {
+            var result = await _transactions.CreateTransactionAsync(createTransactionRequest, cancellationToken);
+            return Ok(result);
+        }
+
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> DeleteTransaction (int id, CancellationToken cancellationToken)
+        {
+            var result = await _transactions.DeleteTransactionAsync(id, cancellationToken);
+            return Ok(result);
+        }
     }
 }

@@ -1,4 +1,5 @@
 using Thrifty.Application.Abstractions;
+using Thrifty.Domain.Entities;
 
 namespace Thrifty.Application.Transactions
 {
@@ -29,5 +30,15 @@ namespace Thrifty.Application.Transactions
             return transactions.Select(TransactionDto.FromEntity).ToList();
         }
 
+        public async Task<TransactionDto> CreateTransactionAsync(CreateTransactionRequest createTransactionRequest, CancellationToken cancellationTokens = default)
+        {
+            var createTransaction = await _transactions.CreateTransactionAsync(CreateTransactionRequest.ToEntity(createTransactionRequest), cancellationTokens);
+            return TransactionDto.FromEntity(createTransaction);
+        }
+
+        public async Task<bool> DeleteTransactionAsync(int id, CancellationToken cancellationTokens = default)
+        {
+            return await _transactions.DeleteTransactionAsync(id, cancellationTokens);
+        }
     }
 }
